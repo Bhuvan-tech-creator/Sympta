@@ -1,0 +1,248 @@
+/* Color Palette (Modern medical-inspired) */
+:root {
+  --bg-light-blue: #e6f0fa;
+  --card-bg: #ffffff;
+  --text-blue: #007bff;
+  --button-bg: #007bff;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+  font-family: "Roboto", "Helvetica", Arial, sans-serif;
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Page Shell */
+body {
+  background: var(--bg-light-blue);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app {
+  width: 100%;
+  max-width: 1400px;
+  padding: 30px;
+}
+
+/* Header */
+.site-header {
+  text-align: center;
+  padding: 20px 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.site-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-blue);
+  letter-spacing: 1px;
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  gap: 20px;
+  max-height: 700px;
+  margin-top: 20px;
+}
+
+/* Symptom Page Layout */
+.layout.symptom {
+  justify-content: space-between;
+}
+
+.left {
+  flex: 1 1 50%;
+  min-width: 500px;
+  background: rgba(211, 224, 221, 0.9);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.canvas-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+canvas {
+  background: #d3e0dd;
+}
+
+/* Diagnosis Page Layout */
+.layout.diagnosis .left {
+  flex: 1 1 30%; /* Thinner left panel */
+  min-width: 300px; /* Reduced width */
+  margin-left: 0; /* Shift to the left */
+}
+
+.layout.diagnosis .right {
+  flex: 1 1 70%; /* Wider right panel for emphasis */
+  min-width: 600px;
+}
+
+/* Right Column */
+.right {
+  flex: 1 1 50%;
+  min-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-card,
+.diagnosis-card {
+  background: var(--card-bg);
+  padding: 25px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.diagnosis-card {
+  padding: 35px; /* More padding for prominence */
+  max-width: 700px; /* Wider for emphasis */
+}
+
+.form-card h2,
+.diagnosis-card h2 {
+  font-size: 1.4rem;
+  color: var(--text-blue);
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.diagnosis-card h2 {
+  font-size: 1.6rem; /* Larger for prominence */
+}
+
+/* Form Layout */
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  flex: 1;
+}
+
+.full-width {
+  width: 100%;
+}
+
+label {
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--text-blue);
+  outline: none;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--button-bg);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-top: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  background: #b8daff;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* Markdown Styling */
+.diagnosis-card > h3 {
+  color: var(--text-blue);
+  margin-bottom: 20px; /* More spacing for prominence */
+  font-size: 1.5rem; /* Larger text */
+  font-weight: 700; /* Bolder */
+}
+
+.diagnosis-card > strong {
+  color: var(--text-blue);
+  font-weight: 800; /* Extra bold for emphasis */
+  font-size: 1.2rem;
+}
+
+.diagnosis-card > ul {
+  padding-left: 25px;
+  margin: 15px 0;
+  font-size: 1.1rem; /* Larger text for remedies */
+}
+
+.diagnosis-card > li {
+  margin: 10px 0; /* More spacing between items */
+}
+
+/* Ensure no unnecessary overflow */
+.layout,
+.left,
+.right,
+.form-card,
+.diagnosis-card {
+  overflow: hidden;
+}
+
+.form-card {
+  overflow: visible;
+}
+
+.layout.diagnosis .diagnosis-card {
+  overflow: auto; /* Allow scrolling if content exceeds */
+}

@@ -1,0 +1,23 @@
+# Ignore environment files
+backend/.env
+
+# Ignore frontend build artifacts
+frontend/build/
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Ignore Python cache
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+backend/venv/
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+node_modules
