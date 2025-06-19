@@ -4,11 +4,11 @@ from dotenv import load_dotenv
 import requests
 import os
 
-load_dotenv()
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/diagnose": {"origins": "*"}})  # Allow Vercel requests
 
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+load_dotenv()
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
 
 @app.route("/")
 def index():
@@ -17,24 +17,28 @@ def index():
 @app.route("/diagnose", methods=["POST"])
 def diagnose():
     data = request.json
-    symptoms = data.get("symptoms", "")
+    prompt = data.get("prompt", "")  # Changed from symptoms
+    if not prompt:
+        return jsonify({"error": "Prompt required"}), 400
+    try:
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "mistralai/mistral-7b-instruct:free",
+                "messages": [{"role": "user", "content": prompt}],
+                "max_tokens": 300,
+            },
+        )
+        response.raise_for_status()
+        result = response.json()
+        message = result["choices"][0]["message"]["content"]
+        return jsonify({"diagnosis": message})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    response = requests.post(
-        "https://openrouter.ai/api/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json"
-        },
-        json={
-            "model": "mistralai/mistral-7b-instruct:free",
-            "messages": [{"role": "user", "content": symptoms}],
-            "max_tokens": 300,
-        },
-    )
-
-    result = response.json()
-    message = result["choices"][0]["message"]["content"]
-    return jsonify({"diagnosis": message})
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))

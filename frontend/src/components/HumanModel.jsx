@@ -35,7 +35,7 @@ function Model({ onPick, readOnly }) {
       <primitive
         object={scene}
         scale={3.0}
-        position={[0, 0, 0]} /* Centered at origin */
+        position={[0, -2.75, 0]} /* Centered at origin */
         onClick={handleClick}
       />
       {markerPos && !readOnly && <Marker position={markerPos} />}
@@ -46,7 +46,7 @@ function Model({ onPick, readOnly }) {
 export default function HumanModel({ onPick = () => {}, readOnly = false, markerPos }) {
   return (
     <div className="canvas-wrapper">
-      <Canvas camera={{ position: [0, 0, 6], fov: 40 }}> /* Adjusted for centering */
+      <Canvas camera={{ position: [0, 0, 6], fov: 65 }}> /* Adjusted for centering */
         <ambientLight intensity={0.7} />
         <directionalLight position={[2, 2, 5]} intensity={1.0} />
         <Model onPick={onPick} readOnly={readOnly} />
